@@ -1,3 +1,19 @@
-selector {
-    property: value;
+/* CSS */
+body {
+    background-color: lightblue;
+    /* Set the background color */
+    font-family: Arial, sans-serif;
+    /* Set the font family for text */
+    color: #333;
+    /* Set the text color */
+}
+
+h1 {
+    color: #ff6600;
+    /* Set a different color for the heading text */
+}
+
+p {
+    font-size: 16px;
+    /* Set the font size for paragraphs */
 }
