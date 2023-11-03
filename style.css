@@ -5,8 +5,9 @@
 
 body {
     background-color: #000000;
+    /* Black background */
     font-family: "poppins", sans-serif;
-    disply: flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -15,16 +16,41 @@ body {
 }
 
 .quiz-container {
-    background-color: #fff;
+    background-color: #ff1493;
     border-radius: 10px;
-    box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+    box-shadow: 0 0 10px 2px rgba(255, 20, 147, 0.2);   
     width: 500px;
     max-width: 95vw;
     overflow: hidden;
 }
-/* header quiz and text */
 
+/* header quiz and text */
 .quiz-header {
     padding: 1rem;
+    background-color: #000;
+    color: #ff1493;
+   
+}
 
+h2 {
+    padding: 1rem;
+    text-align: center;
+    margin: 0;
+    color: #ffffff;  
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #ffffff;    
+}
+
+ul li label {
+    cursor: pointer;
+    color: #ffffff;   
 }
