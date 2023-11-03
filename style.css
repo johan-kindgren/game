@@ -1,3 +1,4 @@
+/* body and background */
 * {
     box-sizing: border-box;
 }
@@ -20,4 +21,10 @@ body {
     width: 500px;
     max-width: 95vw;
     overflow: hidden;
+}
+/* header quiz and text */
+
+.quiz-header {
+    padding: 1rem;
+
 }
