@@ -84,6 +84,16 @@ const quizData = [
 ];
 
 // DOM Elements
+
+const startOverlay = document.getElementById("start-overlay");
+const startButton = document.getElementById("start-quiz");
+
+startButton.addEventListener("click", () => {
+    startOverlay.style.display = "none";
+    loadQuiz();
+});
+
+
 const quizHeader = document.querySelector(".quiz-header");
 const questionElement = document.getElementById("question");
 const answerElements = document.querySelectorAll(".answer");
