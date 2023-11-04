@@ -1,5 +1,4 @@
 // questions
-
 const quizData = [
     {
         question: "What is the capital of Sweden?",
@@ -84,16 +83,8 @@ const quizData = [
 ];
 
 // DOM Elements
-
 const startOverlay = document.getElementById("start-overlay");
 const startButton = document.getElementById("start-quiz");
-
-startButton.addEventListener("click", () => {
-    startOverlay.style.display = "none";
-    loadQuiz();
-});
-
-
 const quizHeader = document.querySelector(".quiz-header");
 const questionElement = document.getElementById("question");
 const answerElements = document.querySelectorAll(".answer");
@@ -102,24 +93,36 @@ const b_text = document.getElementById("b_text");
 const c_text = document.getElementById("c_text");
 const d_text = document.getElementById("d_text");
 const submitButton = document.getElementById("submit");
-
 const resultsOverlay = document.getElementById("results-overlay");
 const scoreValueElement = document.getElementById("score-value");
 const percentageValueElement = document.getElementById("percentage-value");
 const closeResultsButton = document.getElementById("close-results");
+const messageOverlay = document.getElementById("message-overlay");
+const closeMessageButton = document.getElementById("close-message");
 
 let currentQuiz = 0;
 let score = 0;
 
 const loadQuiz = () => {
-    deselectAnswers();
+    if (currentQuiz < quizData.length) {
+        deselectAnswers();
 
-    const currentQuizData = quizData[currentQuiz];
-    questionElement.innerText = currentQuizData.question;
-    a_text.innerText = currentQuizData.a;
-    b_text.innerText = currentQuizData.b;
-    c_text.innerText = currentQuizData.c;
-    d_text.innerText = currentQuizData.d;
+        const currentQuizData = quizData[currentQuiz];
+        questionElement.innerText = currentQuizData.question;
+        a_text.innerText = currentQuizData.a;
+        b_text.innerText = currentQuizData.b;
+        c_text.innerText = currentQuizData.c;
+        d_text.innerText = currentQuizData.d;
+
+        // Enable the answer options for the current question
+        enableAnswers();
+    } else {
+        const percentage = (score / quizData.length) * 100;
+
+        scoreValueElement.innerText = score;
+        percentageValueElement.innerText = percentage.toFixed(2);
+        resultsOverlay.style.display = "flex";
+    }
 };
 
 const deselectAnswers = () => {
@@ -140,31 +143,46 @@ const getSelected = () => {
     return answer;
 };
 
+const enableAnswers = () => {
+    answerElements.forEach(answerEl => {
+        answerEl.disabled = false;
+    });
+    submitButton.disabled = false;
+};
+
 submitButton.addEventListener("click", () => {
     const answer = getSelected();
     if (answer) {
         if (answer === quizData[currentQuiz].correct) score++;
         currentQuiz++;
 
-        if (currentQuiz < quizData.length) {
-            loadQuiz();
-        } else {
-            // Calculate percentage
-            const percentage = (score / quizData.length) * 100;
+        // Close the message window when an answer is selected
+        messageOverlay.style.display = "none";
 
-            // Update the results overlay to display results
-            scoreValueElement.innerText = score;
-            percentageValueElement.innerText = percentage.toFixed(2);
-            resultsOverlay.style.display = "flex";
-        }
+        loadQuiz();
     } else {
-        alert("Please select an answer!");
+        // Display the message window when there's no selected answer
+        messageOverlay.style.display = "flex";
     }
 });
+
+closeMessageButton.addEventListener("click", () => {
+    // Close the message window
+    messageOverlay.style.display = "none";
+});
+
+const disableAnswers = () => {
+    answerElements.forEach(answerEl => {
+        answerEl.disabled = true;
+    });
+};
 
 closeResultsButton.addEventListener("click", () => {
     resultsOverlay.style.display = "none";
 });
 
 // Initial load
-loadQuiz();
+startButton.addEventListener("click", () => {
+    startOverlay.style.display = "none";
+    loadQuiz();
+});
