@@ -1,12 +1,12 @@
 /* body and background */
 * {
     box-sizing: border-box;
+    color: #fff;
 }
 
 body {
-    background-color: #000000;
-    /* Black background */
-    font-family: "poppins", sans-serif;
+    background-color: #000;
+    font-family: "Poppins", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,28 +15,25 @@ body {
     margin: 0;
 }
 
+/* text and style background */
+
 .quiz-container {
-    background-color: #ff1493;
+    background-color: #4b0082;
     border-radius: 10px;
-    box-shadow: 0 0 10px 2px rgba(255, 20, 147, 0.2);   
+    box-shadow: 0 0 10px 2px rgba(75, 0, 130, 0.1);
     width: 500px;
     max-width: 95vw;
     overflow: hidden;
 }
 
-/* header quiz and text */
 .quiz-header {
     padding: 1rem;
-    background-color: #000;
-    color: #ff1493;
-   
 }
 
 h2 {
     padding: 1rem;
     text-align: center;
     margin: 0;
-    color: #ffffff;  
 }
 
 ul {
@@ -47,23 +44,31 @@ ul {
 ul li {
     font-size: 1.2rem;
     margin: 1rem 0;
-    
 }
 
 ul li label {
     cursor: pointer;
-    color: #ffffff;
-   
 }
 
 button {
-    background-color: #ff1493;
-    color #fff;
+    background-color: #4b0082;
+    color: #fff;
     border: none;
     display: block;
     width: 100%;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-family: inherit;
-    padding: 1rem;
+    padding: 1.1rem;
+}
+
+button:hover {
+    background-color: #2b0062;
+    
+}
+
+button:focus {
+    outline: none;
+    background-color: #1b0042;
+    
 }
