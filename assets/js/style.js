@@ -1,3 +1,5 @@
+// questions
+
 const quizData = [
     {
         question: "What is the capital of Sweden?",
@@ -80,3 +82,79 @@ const quizData = [
         correct: "d",
     },
 ];
+
+// DOM Elements
+const quizHeader = document.querySelector(".quiz-header");
+const questionElement = document.getElementById("question");
+const answerElements = document.querySelectorAll(".answer");
+const a_text = document.getElementById("a_text");
+const b_text = document.getElementById("b_text");
+const c_text = document.getElementById("c_text");
+const d_text = document.getElementById("d_text");
+const submitButton = document.getElementById("submit");
+
+const resultsOverlay = document.getElementById("results-overlay");
+const scoreValueElement = document.getElementById("score-value");
+const percentageValueElement = document.getElementById("percentage-value");
+const closeResultsButton = document.getElementById("close-results");
+
+let currentQuiz = 0;
+let score = 0;
+
+const loadQuiz = () => {
+    deselectAnswers();
+
+    const currentQuizData = quizData[currentQuiz];
+    questionElement.innerText = currentQuizData.question;
+    a_text.innerText = currentQuizData.a;
+    b_text.innerText = currentQuizData.b;
+    c_text.innerText = currentQuizData.c;
+    d_text.innerText = currentQuizData.d;
+};
+
+const deselectAnswers = () => {
+    answerElements.forEach(answerEl => {
+        answerEl.checked = false;
+    });
+};
+
+const getSelected = () => {
+    let answer;
+
+    answerElements.forEach(answerEl => {
+        if (answerEl.checked) {
+            answer = answerEl.id;
+        }
+    });
+
+    return answer;
+};
+
+submitButton.addEventListener("click", () => {
+    const answer = getSelected();
+    if (answer) {
+        if (answer === quizData[currentQuiz].correct) score++;
+        currentQuiz++;
+
+        if (currentQuiz < quizData.length) {
+            loadQuiz();
+        } else {
+            // Calculate percentage
+            const percentage = (score / quizData.length) * 100;
+
+            // Update the results overlay to display results
+            scoreValueElement.innerText = score;
+            percentageValueElement.innerText = percentage.toFixed(2);
+            resultsOverlay.style.display = "flex";
+        }
+    } else {
+        alert("Please select an answer!");
+    }
+});
+
+closeResultsButton.addEventListener("click", () => {
+    resultsOverlay.style.display = "none";
+});
+
+// Initial load
+loadQuiz();

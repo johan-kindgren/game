@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo">SwedenQuiz</a>
+            <a href="index.html" class="logo">SwedenQuiz</a>
             <ul>
                 <li><a href="about.html">Game About</a></li>
             </ul>
@@ -20,58 +20,53 @@
     </nav>
 
     <header>
-
         <div class="quiz-header">
             <h2 id="question">Question is loading!!</h2>
-
             <ul>
                 <li>
                     <input type="radio" name="answer" id="a" class="answer" />
-                    <label for="a" id="text1">Answer 1</label>
+                    <label for="a" id="a_text">Answer 1</label>
                 </li>
                 <li>
                     <input type="radio" name="answer" id="b" class="answer" />
-                    <label for="b" id="text2">Answer 2</label>
+                    <label for="b" id="b_text">Answer 2</label>
                 </li>
                 <li>
                     <input type="radio" name="answer" id="c" class="answer" />
-                    <label for="c" id="text3">Answer 3</label>
+                    <label for="c" id="c_text">Answer 3</label>
                 </li>
                 <li>
                     <input type="radio" name="answer" id="d" class="answer" />
-                    <label for="d" id="text4">Answer 4</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="e" class="answer" />
-                    <label for="e" id="text5">Answer 5</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="f" class="answer" />
-                    <label for="f" id="text6">Answer 6</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="g" class="answer" />
-                    <label for="g" id="text7">Answer 7</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="h" class="answer" />
-                    <label for="h" id="text8">Answer 8</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="i" class="answer" />
-                    <label for="i" id="text9">Answer 9</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="j" class="answer" />
-                    <label for="j" id="text10">Answer 10</label>
+                    <label for="d" id="d_text">Answer 4</label>
                 </li>
             </ul>
-
             <button id="submit">Submit</button>
-
         </div>
-        <script src="assets/js/style.js"></script>
     </header>
+
+    <div class="results-overlay" id="results-overlay">
+        <div class="results-box">
+            <h1>Your Results</h1>
+            <p class="score">Score: <span id="score-value"></span>/10</p>
+            <p class="percentage">Percentage: <span id="percentage-value"></span>%</p>
+            <button id="close-results">Close</button>
+            <button onclick="location.reload()">Play Again</button>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <a href="#" class="footer-icon" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a href="#" class="footer-icon" target="_blank"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="footer-icon" target="_blank"><i class="fa fa-twitter"></i></a>
+            <a href="#" class="footer-icon" target="_blank"><i class="fa fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <script src="assets/js/style.js"></script>
 </body>
 
 </html>
