@@ -1,82 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sweden Quiz</title>
-    <link rel="stylesheet" href="assets/css/style.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-</head>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">SwedenQuiz</a>
-            <ul>
-                <li><a href="about.html">Game About</a></li>
-            </ul>
-        </div>
+      <div class="container">
+        <a class="logo">SwedenQuiz</a>
+        <ul>
+          <li class="gameList">
+            <a href="index.html" class="gameLink">Start Game</a>
+          </li>
+          <li class="gameList">
+            <a href="about.html" class="gameLink">About Quiz</a>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <header>
-
-        <div class="start-overlay" id="start-overlay">
-            <div class="start-box">
-                <h1>Welcome to Quiz about Sweden</h1>
-                <p>Test your knowledge about Sweden and see how well you score.</p>
-                <button id="start-quiz">Start Quiz</button>
-            </div>
+      <div class="start-overlay" id="start-overlay">
+        <div class="start-box">
+          <h1>Welcome to Quiz about Sweden</h1>
+          <p>Test your knowledge about Sweden and see how well you score.</p>
+          <button id="start-quiz">Start Quiz</button>
         </div>
+      </div>
 
-        <div class="quiz-header">
-            <h2 id="question">Question is loading!!</h2>
-            <ul>
-                <li>
-                    <input type="radio" name="answer" id="a" class="answer"/>
-                    <label for="a" id="a_text">Answer 1</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="b" class="answer"/>
-                    <label for="b" id="b_text">Answer 2</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="c" class="answer"/>
-                    <label for="c" id="c_text">Answer 3</label>
-                </li>
-                <li>
-                    <input type="radio" name="answer" id="d" class="answer"/>
-                    <label for="d" id="d_text">Answer 4</label>
-                </li>
-            </ul>
-            <button id="submit">Submit</button>
-        </div>
+      <div class="quiz-header">
+        <h2 id="question">Question is loading!!</h2>
+        <ul>
+          <li>
+            <input type="radio" name="answer" id="a" class="answer" />
+            <label for="a" id="a_text">Answer 1</label>
+          </li>
+          <li>
+            <input type="radio" name="answer" id="b" class="answer" />
+            <label for="b" id="b_text">Answer 2</label>
+          </li>
+          <li>
+            <input type="radio" name="answer" id="c" class="answer" />
+            <label for="c" id="c_text">Answer 3</label>
+          </li>
+          <li>
+            <input type="radio" name="answer" id="d" class="answer" />
+            <label for="d" id="d_text">Answer 4</label>
+          </li>
+        </ul>
+        <button id="submit">Submit</button>
+      </div>
 
-        <div class="message-overlay" id="message-overlay">
-            <div class="message-box">
-                <p>Please select an answer!</p>
-                <button id="close-message">Close</button>
-            </div>
+      <div class="message-overlay" id="message-overlay">
+        <div class="message-box">
+          <p>Please select an answer!</p>
+          <button id="close-message">Close</button>
         </div>
-        
+      </div>
+
+      <div class="results-overlay" id="results-overlay">
+        <div class="results-box">
+          <h1>Your Results</h1>
+          <p class="score">Score: <span id="score-value"></span>/10</p>
+          <p class="percentage">
+            Percentage: <span id="percentage-value"></span>%
+          </p>
+          <button id="close-results">Close</button>
+          <button onclick="location.reload()">Play Again</button>
+        </div>
+      </div>
     </header>
 
-    <div class="results-overlay" id="results-overlay">
-        <div class="results-box">
-            <h1>Your Results</h1>
-            <p class="score">Score: <span id="score-value"></span>/10</p>
-            <p class="percentage">Percentage: <span id="percentage-value"></span>%</p>
-            <button id="close-results">Close</button>
-            <button onclick="location.reload()">Play Again</button>
-        </div>
-    </div>
-
     <footer class="footer">
-        <div class="container">
-        </div>
+      <div class="container"></div>
     </footer>
 
     <script src="assets/js/style.js"></script>
-</body>
-
+  </body>
 </html>

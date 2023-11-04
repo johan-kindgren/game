@@ -20,9 +20,7 @@ body {
 .centered-content {
     text-align: center;
     max-width: 600px;
-    /* Adjust this value as per your requirement */
     margin: 0 auto;
-    /* This centers the content horizontally */
     padding: 20px;
 }
 
@@ -50,6 +48,19 @@ body {
     color: #fff;
     font-size: 2rem;
     text-decoration: none;
+}
+
+.gameLink {
+    text-decoration: none;
+}
+
+.gameList {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+.gameLink:hover {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .menu li {
@@ -218,3 +229,27 @@ h1 {
     z-index: 1000;
 }
 
+/* Mobile adjustments */
+@media only screen and (max-width: 600px) {
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .gameLink {
+        font-size: 1rem;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .gameLink {
+        font-size: 0.8rem;
+    }
+
+    .gameList {
+        display: block;
+    }
+}
