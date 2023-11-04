@@ -209,7 +209,36 @@ h1 {
     z-index: 1000;
 }
 
-.footer-icon {
-    color: #fff;
-    font-size: 24px;
-    text-decoration: none
+
+
+    @media (max-width: 768px) {
+        .navbar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            width: 80%%;
+            align-items: center;
+        }
+
+        .menu li a {
+            display: block;
+            padding: 10px 20px;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+@media (max-width: 768px) {
+    .aboutmain {
+        max-width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+}
