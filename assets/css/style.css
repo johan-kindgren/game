@@ -17,6 +17,15 @@ body {
     padding: 0;
 }
 
+.centered-content {
+    text-align: center;
+    max-width: 600px;
+    /* Adjust this value as per your requirement */
+    margin: 0 auto;
+    /* This centers the content horizontally */
+    padding: 20px;
+}
+
 /* Navbar Styles */
 .navbar {
     background-color: #4b0082;
@@ -211,34 +220,39 @@ h1 {
 
 
 
-    @media (max-width: 768px) {
-        .navbar {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        .menu {
-            display: flex;
-            flex-direction: column;
-            width: 80%%;
-            align-items: center;
-        }
-
-        .menu li a {
-            display: block;
-            padding: 10px 20px;
-            width: 100%;
-            text-align: center;
-        }
+@media (max-width: 768px) {
+    .navbar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
     }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        width: 80%%;
+        align-items: center;
+    }
+
+    .menu li a {
+        display: block;
+        padding: 10px 20px;
+        width: 100%;
+        text-align: center;
+    }
+}
 
 @media (max-width: 768px) {
-    .aboutmain {
+    .centered-content {
         max-width: 100%;
-        padding: 0 10px;
-        box-sizing: border-box;
-    }
+        padding: 2px;
+
+}
+
+@media (max-width: 400px) {
+    .centered-content {
+        font-size: 14px;
+        
 }
