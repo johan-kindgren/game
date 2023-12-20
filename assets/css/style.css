@@ -30,7 +30,9 @@ body {
     text-align: center;
 }
 
-.start-overlay button, .results-overlay button, #submit-answer {
+.start-overlay button,
+.results-overlay button,
+#submit-answer {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -40,13 +42,39 @@ body {
     border-radius: 5px;
     margin-top: 20px;
     display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
 }
 
-.start-overlay button:hover, .results-overlay button:hover {
+.start-overlay button:hover,
+.results-overlay button:hover {
     background-color: #367c39;
 }
 
-.quiz-container, .results-overlay {
+.start-overlay button::after,
+.results-overlay button::after,
+#submit-answer::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #367c39;
+    z-index: -1;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.start-overlay button:hover::after,
+.results-overlay button:hover::after,
+#submit-answer:hover::after {
+    transform: translateY(0);
+}
+
+.quiz-container,
+.results-overlay {
     background-color: #292929;
     padding: 20px;
     border-radius: 8px;
@@ -87,7 +115,8 @@ body {
     color: #fff;
 }
 
-#score-text, #percentage-text {
+#score-text,
+#percentage-text {
     font-size: 20px;
     margin: 10px 0;
 }
@@ -108,4 +137,9 @@ body {
 
 .selected-answer {
     background-color: #ffcc00;
+}
+
+.summary {
+    text-align: left;
+    margin-top: 20px;
 }

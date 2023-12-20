@@ -14,12 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Quiz State
     let currentQuestionIndex, score, questions, selectedAnswerIndex, selectedCorrect;
+    let questionStatus = []; // Track the status of each question
 
     // Function to start the quiz
     function startQuiz() {
         currentQuestionIndex = 0;
         score = 0;
         questions = getQuestions();
+        questionStatus = [];
         startOverlay.classList.add('hidden');
         quizContainer.classList.remove('hidden');
         resultsOverlay.classList.add('hidden');
@@ -61,6 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to submit the selected answer and move to the next question
     function submitAnswer() {
         if (selectedAnswerIndex != null) {
+            questionStatus.push({ // Record the question status
+                question: questions[currentQuestionIndex].question,
+                correct: selectedCorrect
+            });
+
             if (selectedCorrect) {
                 score++;
             }
@@ -81,6 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const percentage = (score / questions.length) * 100;
         scoreTextElement.textContent = `Score: ${score}/${questions.length}`;
         percentageTextElement.textContent = `Percentage: ${percentage.toFixed(2)}%`;
+
+        // Display the questions and whether they were answered correctly
+        const resultsSummary = document.createElement('div');
+        questionStatus.forEach(q => {
+            const questionElem = document.createElement('p');
+            questionElem.textContent = `${q.question} - ${q.correct ? 'Correct' : 'Wrong'}`;
+            resultsSummary.appendChild(questionElem);
+        });
+        resultsOverlay.appendChild(resultsSummary);
     }
 
     // Function to update the progress bar
@@ -100,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { text: "Malmo", correct: false },
                     { text: "Uppsala", correct: false },
                     { text: "Stockholm", correct: true }
-                ];
+                ]
             },
             {
                 question: "Which Swedish company is known for flat-pack furniture?",
@@ -109,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { text: "IKEA", correct: true },
                     { text: "H&M", correct: false },
                     { text: "Ericsson", correct: false }
-                ];
+                ]
             },
             {
                 question: "What is the traditional Swedish festival celebrating the summer solstice?",
@@ -118,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { text: "Midsommar", correct: true },
                     { text: "Jul", correct: false },
                     { text: "Påsk", correct: false }
-                ];
+                ]
             },
             {
                 question: "Which of these is a traditional Swedish dish?",
@@ -127,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { text: "Pizza", correct: false },
                     { text: "Sushi", correct: false },
                     { text: "Hamburger", correct: false }
-                ];
+                ]
             },
             {
                 question: "Which city is known for its well-preserved medieval city center?",
@@ -136,14 +152,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     { text: "Uppsala", correct: false },
                     { text: "Visby", correct: true },
                     { text: "Lund", correct: false }
-                ];
+                ]
             }
-
+        ];
+    }
     // Event Listeners
     startQuizButton.addEventListener('click', startQuiz);
-        restartQuizButton.addEventListener('click', startQuiz);
-        submitAnswerButton.addEventListener('click', submitAnswer);
+    restartQuizButton.addEventListener('click', startQuiz);
+    submitAnswerButton.addEventListener('click', submitAnswer);
 
-        // Start the quiz
-        startQuiz();
-    });
+    // Start the quiz
+    startQuiz();
+});
