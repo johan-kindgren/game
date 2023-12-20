@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Elements
     const startQuizButton = document.getElementById('start-quiz');
     const restartQuizButton = document.getElementById('restart-quiz');
     const submitAnswerButton = document.getElementById('submit-answer');
@@ -9,51 +10,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const startOverlay = document.getElementById('start-overlay');
     const quizContainer = document.getElementById('quiz-container');
     const resultsOverlay = document.getElementById('results-overlay');
+    const progressBar = document.getElementById('progress');
 
+    // Quiz State
     let currentQuestionIndex, score, questions;
 
+    // Function to start the quiz
     function startQuiz() {
-        questions = getQuestions();
         currentQuestionIndex = 0;
         score = 0;
+        questions = getQuestions();
         startOverlay.classList.add('hidden');
         quizContainer.classList.remove('hidden');
         resultsOverlay.classList.add('hidden');
         showQuestion(questions[currentQuestionIndex]);
+        updateProgressBar();
     }
 
+    // Function to show a question
     function showQuestion(question) {
         questionElement.textContent = question.question;
         answerButtonsElement.innerHTML = '';
-        question.answers.forEach(answer => {
+
+        question.answers.forEach((answer, index) => {
             const button = document.createElement('button');
             button.textContent = answer.text;
-            button.addEventListener('click', () => selectAnswer(answer.correct));
+            button.classList.add('answer-button');
+            button.addEventListener('click', () => selectAnswer(answer.correct, index));
             answerButtonsElement.appendChild(button);
         });
-        submitAnswerButton.classList.add('hidden');
     }
 
-    function selectAnswer(correct) {
-        Array.from(answerButtonsElement.children).forEach(button => {
-            button.disabled = true;
-        });
-        submitAnswerButton.classList.remove('hidden');
-        submitAnswerButton.addEventListener('click', () => nextQuestion(correct));
-    }
-
-    function nextQuestion(correct) {
+    // Function to handle answer selection
+    function selectAnswer(correct, index) {
         if (correct) {
             score++;
         }
+        Array.from(answerButtonsElement.children).forEach((button, buttonIndex) => {
+            button.disabled = true;
+            if (buttonIndex === index) {
+                button.classList.add(correct ? 'correct-answer' : 'wrong-answer');
+            }
+        });
         if (currentQuestionIndex < questions.length - 1) {
-            currentQuestionIndex++;
-            showQuestion(questions[currentQuestionIndex]);
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showQuestion(questions[currentQuestionIndex]);
+                updateProgressBar();
+            }, 1000);
         } else {
-            endQuiz();
+            setTimeout(endQuiz, 1000);
         }
     }
 
+    // Function to end the quiz
     function endQuiz() {
         quizContainer.classList.add('hidden');
         resultsOverlay.classList.remove('hidden');
@@ -62,6 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
         percentageTextElement.textContent = `Percentage: ${percentage.toFixed(2)}%`;
     }
 
+    // Function to update the progress bar
+    function updateProgressBar() {
+        const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
+    }
+
+    // Sample questions (replace with your own)
     function getQuestions() {
         return [
             {
@@ -112,9 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
              ];
     }
 
+    // Event Listeners
     startQuizButton.addEventListener('click', startQuiz);
     restartQuizButton.addEventListener('click', startQuiz);
-});
-        ];
-    }
+
+    // Start the quiz
+    startQuiz();
 });
