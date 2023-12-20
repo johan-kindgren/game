@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Elements
     const startQuizButton = document.getElementById('start-quiz');
     const restartQuizButton = document.getElementById('restart-quiz');
     const submitAnswerButton = document.getElementById('submit-answer');
@@ -11,12 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizContainer = document.getElementById('quiz-container');
     const resultsOverlay = document.getElementById('results-overlay');
     const progressBar = document.getElementById('progress');
+    const summaryElement = document.getElementById('summary');
 
-    // Quiz State
     let currentQuestionIndex, score, questions, selectedAnswerIndex, selectedCorrect;
-    let questionStatus = []; // Track the status of each question
+    let questionStatus = [];
 
-    // Function to start the quiz
     function startQuiz() {
         currentQuestionIndex = 0;
         score = 0;
@@ -30,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProgressBar();
     }
 
-    // Function to show a question
     function showQuestion(question) {
         questionElement.textContent = question.question;
         answerButtonsElement.innerHTML = '';
@@ -45,12 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedAnswerIndex = null;
     }
 
-    // Function to handle answer selection
     function selectAnswer(correct, index) {
         selectedAnswerIndex = index;
         selectedCorrect = correct;
         Array.from(answerButtonsElement.children).forEach((button, buttonIndex) => {
-            button.disabled = buttonIndex !== selectedAnswerIndex;
             if (buttonIndex === selectedAnswerIndex) {
                 button.classList.add('selected-answer');
             } else {
@@ -60,14 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
         submitAnswerButton.classList.remove('hidden');
     }
 
-    // Function to submit the selected answer and move to the next question
     function submitAnswer() {
         if (selectedAnswerIndex != null) {
-            questionStatus.push({ // Record the question status
+            questionStatus.push({
                 question: questions[currentQuestionIndex].question,
                 correct: selectedCorrect
             });
-
             if (selectedCorrect) {
                 score++;
             }
@@ -81,32 +74,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to end the quiz
     function endQuiz() {
         quizContainer.classList.add('hidden');
         resultsOverlay.classList.remove('hidden');
         const percentage = (score / questions.length) * 100;
         scoreTextElement.textContent = `Score: ${score}/${questions.length}`;
         percentageTextElement.textContent = `Percentage: ${percentage.toFixed(2)}%`;
-
-        // Display the questions and whether they were answered correctly
-        const resultsSummary = document.createElement('div');
+        summaryElement.innerHTML = '';
         questionStatus.forEach(q => {
             const questionElem = document.createElement('p');
             questionElem.textContent = `${q.question} - ${q.correct ? 'Correct' : 'Wrong'}`;
-            resultsSummary.appendChild(questionElem);
+            summaryElement.appendChild(questionElem);
         });
-        resultsOverlay.appendChild(resultsSummary);
     }
 
-    // Function to update the progress bar
     function updateProgressBar() {
         const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
         progressBar.style.width = `${progressPercentage}%`;
         percentageTextElement.textContent = `Current Progress: ${progressPercentage.toFixed(2)}%`;
     }
 
-    // Sample questions (replace with your own)
     function getQuestions() {
         return [
             {
@@ -156,11 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         ];
     }
-    // Event Listeners
     startQuizButton.addEventListener('click', startQuiz);
     restartQuizButton.addEventListener('click', startQuiz);
     submitAnswerButton.addEventListener('click', submitAnswer);
-
-    // Start the quiz
-    startQuiz();
 });

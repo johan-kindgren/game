@@ -20,7 +20,9 @@
 
         <section class="quiz-container hidden" id="quiz-container">
             <div class="progress-bar" id="progress-bar">
-                <div class="progress" id="progress"></div>
+                <div class="progress" id="progress">
+                    <span id="progress-text" class="progress-text"></span>
+                </div>
             </div>
             <div id="question" class="question"></div>
             <div id="answer-buttons" class="answer-buttons"></div>
@@ -32,10 +34,12 @@
                 <h2>Your Results</h2>
                 <p id="score-text"></p>
                 <p id="percentage-text"></p>
+                <div id="summary"></div>
                 <button id="restart-quiz">Restart Quiz</button>
             </div>
         </section>
     </div>
+
 
     <script src="assets/js/style.js"></script>
 </body>
