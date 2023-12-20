@@ -90,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         percentageTextElement.textContent = `Current Progress: ${progressPercentage.toFixed(2)}%`;
     }
 
-    // Sample questions (replace with your own)
     function getQuestions() {
 
         question: "What is the capital of Sweden?",
