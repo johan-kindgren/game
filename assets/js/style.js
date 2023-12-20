@@ -83,106 +83,97 @@ const quizData = [
 ];
 
 // DOM Elements
-const startOverlay = document.getElementById("start-overlay");
-const startButton = document.getElementById("start-quiz");
-const quizHeader = document.querySelector(".quiz-header");
-const questionElement = document.getElementById("question");
-const answerElements = document.querySelectorAll(".answer");
-const a_text = document.getElementById("a_text");
-const b_text = document.getElementById("b_text");
-const c_text = document.getElementById("c_text");
-const d_text = document.getElementById("d_text");
-const submitButton = document.getElementById("submit");
-const resultsOverlay = document.getElementById("results-overlay");
-const scoreValueElement = document.getElementById("score-value");
-const percentageValueElement = document.getElementById("percentage-value");
-const closeResultsButton = document.getElementById("close-results");
-const messageOverlay = document.getElementById("message-overlay");
-const closeMessageButton = document.getElementById("close-message");
+const quizContainer = document.getElementById('quiz-container');
+const questionElement = document.getElementById('question');
+const answersContainer = document.querySelectorAll('.answer');
+const submitButton = document.getElementById('submit');
+const startOverlay = document.getElementById('start-overlay');
+const startButton = document.getElementById('start-quiz');
+const resultsOverlay = document.getElementById('results-overlay');
+const scoreValueElement = document.getElementById('score-value');
+const percentageValueElement = document.getElementById('percentage-value');
+const playAgainButton = document.createElement('button');
+const quitButton = document.createElement('button');
+
+// Quiz Data
+const quizData = [
+    // ... (your quizData array) ...
+];
 
 let currentQuiz = 0;
 let score = 0;
 
 const loadQuiz = () => {
-    if (currentQuiz < quizData.length) {
-        deselectAnswers();
-
-        const currentQuizData = quizData[currentQuiz];
-        questionElement.innerText = currentQuizData.question;
-        a_text.innerText = currentQuizData.a;
-        b_text.innerText = currentQuizData.b;
-        c_text.innerText = currentQuizData.c;
-        d_text.innerText = currentQuizData.d;
-
-        // Enable the answer options for the current question
-        enableAnswers();
-    } else {
-        const percentage = (score / quizData.length) * 100;
-
-        scoreValueElement.innerText = score;
-        percentageValueElement.innerText = percentage.toFixed(2);
-        resultsOverlay.style.display = "flex";
-    }
+    deselectAnswers();
+    const currentQuizData = quizData[currentQuiz];
+    questionElement.innerText = currentQuizData.question;
+    answersContainer.forEach((answerEl, idx) => {
+        const label = document.querySelector(`label[for=${answerEl.id}]`);
+        label.innerText = currentQuizData['a' + String.fromCharCode('a'.charCodeAt(0) + idx)];
+    });
 };
 
 const deselectAnswers = () => {
-    answerElements.forEach(answerEl => {
-        answerEl.checked = false;
-    });
+    answersContainer.forEach(answerEl => answerEl.checked = false);
 };
 
 const getSelected = () => {
     let answer;
-
-    answerElements.forEach(answerEl => {
-        if (answerEl.checked) {
-            answer = answerEl.id;
-        }
+    answersContainer.forEach(answerEl => {
+        if (answerEl.checked) answer = answerEl.id;
     });
-
     return answer;
 };
 
-const enableAnswers = () => {
-    answerElements.forEach(answerEl => {
-        answerEl.disabled = false;
-    });
-    submitButton.disabled = false;
+const showFinalScreen = () => {
+    // Hide quiz and show results
+    quizContainer.style.display = 'none';
+    resultsOverlay.style.display = 'flex';
+
+    // Show score
+    const percentage = (score / quizData.length) * 100;
+    scoreValueElement.innerText = score;
+    percentageValueElement.innerText = percentage.toFixed(2) + '%';
+
+    // Create and style buttons
+    playAgainButton.innerText = 'Test Again';
+    playAgainButton.className = 'play-again-btn';
+    playAgainButton.onclick = restartQuiz;
+
+    quitButton.innerText = 'Go to Start Page';
+    quitButton.className = 'quit-btn';
+    quitButton.onclick = () => window.location.href = 'index.html';
+
+    resultsOverlay.appendChild(playAgainButton);
+    resultsOverlay.appendChild(quitButton);
 };
 
-submitButton.addEventListener("click", () => {
+const restartQuiz = () => {
+    // Reset state
+    score = 0;
+    currentQuiz = 0;
+    resultsOverlay.style.display = 'none';
+    quizContainer.style.display = 'block';
+    loadQuiz();
+};
+
+submitButton.addEventListener('click', () => {
     const answer = getSelected();
     if (answer) {
         if (answer === quizData[currentQuiz].correct) score++;
         currentQuiz++;
-
-        // Close the message window when an answer is selected
-        messageOverlay.style.display = "none";
-
-        loadQuiz();
+        if (currentQuiz < quizData.length) {
+            loadQuiz();
+        } else {
+            showFinalScreen();
+        }
     } else {
-        // Display the message window when there's no selected answer
-        messageOverlay.style.display = "flex";
+        // Implement what happens if no answer is selected
     }
 });
 
-closeMessageButton.addEventListener("click", () => {
-    // Close the message window
-    messageOverlay.style.display = "none";
-});
-
-const disableAnswers = () => {
-    answerElements.forEach(answerEl => {
-        answerEl.disabled = true;
-    });
-};
-
-closeResultsButton.addEventListener("click", () => {
-    resultsOverlay.style.display = "none";
-});
-
-// Initial load
-startButton.addEventListener("click", () => {
-    startOverlay.style.display = "none";
+// Start Quiz
+startButton.addEventListener('click', () => {
+    startOverlay.style.display = 'none';
     loadQuiz();
 });
