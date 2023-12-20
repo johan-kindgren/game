@@ -1,179 +1,120 @@
-// questions
-const quizData = [
-    {
-        question: "What is the capital of Sweden?",
-        a: "Gothenburg",
-        b: "Malmo",
-        c: "Uppsala",
-        d: "Stockholm",
-        correct: "d",
-    },
-    {
-        question: "Which of these Swedish companies is known for its furniture?",
-        a: "Ericsson",
-        b: "H&M",
-        c: "IKEA",
-        d: "Volvo",
-        correct: "c",
-    },
-    {
-        question: "What is the currency used in Sweden?",
-        a: "Euro",
-        b: "Krone",
-        c: "Swedish Krona",
-        d: "Pound",
-        correct: "c",
-    },
-    {
-        question: "Which famous Swedish pop group sang 'Dancing Queen'?",
-        a: "ABBA",
-        b: "Ace of Base",
-        c: "A*Teens",
-        d: "Roxette",
-        correct: "a",
-    },
-    {
-        question: "Which Swedish city is famous for its canals and historical buildings?",
-        a: "Helsingborg",
-        b: "Gothenburg",
-        c: "Lund",
-        d: "Vasteras",
-        correct: "b",
-    },
-    {
-        question: "Which of these is a traditional Swedish dish?",
-        a: "Croissant",
-        b: "Bratwurst",
-        c: "Köttbullar",
-        d: "Pizza",
-        correct: "c",
-    },
-    {
-        question: "In which Swedish town can you visit the Icehotel?",
-        a: "Luleå",
-        b: "Jukkasjärvi",
-        c: "Kiruna",
-        d: "Umeå",
-        correct: "b",
-    },
-    {
-        question: "What's the name of the Swedish ceremony celebrating the longest day of the year?",
-        a: "Midwinter",
-        b: "Valborg",
-        c: "Lucia",
-        d: "Midsommar",
-        correct: "d",
-    },
-    {
-        question: "Which Swedish author is known for the 'Millennium' series, including 'The Girl with the Dragon Tattoo'?",
-        a: "Henning Mankell",
-        b: "Jonas Jonasson",
-        c: "Stieg Larsson",
-        d: "Karl Ove Knausgård",
-        correct: "c",
-    },
-    {
-        question: "Which of these Swedish lakes is the largest by surface area?",
-        a: "Lake Siljan",
-        b: "Lake Hjälmaren",
-        c: "Lake Mälaren",
-        d: "Lake Vänern",
-        correct: "d",
-    },
-];
+document.addEventListener('DOMContentLoaded', () => {
+    const startQuizButton = document.getElementById('start-quiz');
+    const restartQuizButton = document.getElementById('restart-quiz');
+    const submitAnswerButton = document.getElementById('submit-answer');
+    const questionElement = document.getElementById('question');
+    const answerButtonsElement = document.getElementById('answer-buttons');
+    const scoreTextElement = document.getElementById('score-text');
+    const percentageTextElement = document.getElementById('percentage-text');
+    const startOverlay = document.getElementById('start-overlay');
+    const quizContainer = document.getElementById('quiz-container');
+    const resultsOverlay = document.getElementById('results-overlay');
 
-// DOM Elements
-const quizContainer = document.getElementById('quiz-container');
-const questionElement = document.getElementById('question');
-const answersContainer = document.querySelectorAll('.answer');
-const submitButton = document.getElementById('submit');
-const startOverlay = document.getElementById('start-overlay');
-const startButton = document.getElementById('start-quiz');
-const resultsOverlay = document.getElementById('results-overlay');
-const scoreValueElement = document.getElementById('score-value');
-const percentageValueElement = document.getElementById('percentage-value');
-const playAgainButton = document.createElement('button');
-const quitButton = document.createElement('button');
+    let currentQuestionIndex, score, questions;
 
-// Quiz Data
-const quizData = [
-    // ... (your quizData array) ...
-];
-
-let currentQuiz = 0;
-let score = 0;
-
-const loadQuiz = () => {
-    deselectAnswers();
-    const currentQuizData = quizData[currentQuiz];
-    questionElement.innerText = currentQuizData.question;
-    answersContainer.forEach((answerEl, idx) => {
-        const label = document.querySelector(`label[for=${answerEl.id}]`);
-        label.innerText = currentQuizData['a' + String.fromCharCode('a'.charCodeAt(0) + idx)];
-    });
-};
-
-const deselectAnswers = () => {
-    answersContainer.forEach(answerEl => answerEl.checked = false);
-};
-
-const getSelected = () => {
-    let answer;
-    answersContainer.forEach(answerEl => {
-        if (answerEl.checked) answer = answerEl.id;
-    });
-    return answer;
-};
-
-const showFinalScreen = () => {
-    // Hide quiz and show results
-    quizContainer.style.display = 'none';
-    resultsOverlay.style.display = 'flex';
-
-    // Show score
-    const percentage = (score / quizData.length) * 100;
-    scoreValueElement.innerText = score;
-    percentageValueElement.innerText = percentage.toFixed(2) + '%';
-
-    // Create and style buttons
-    playAgainButton.innerText = 'Test Again';
-    playAgainButton.className = 'play-again-btn';
-    playAgainButton.onclick = restartQuiz;
-
-    quitButton.innerText = 'Go to Start Page';
-    quitButton.className = 'quit-btn';
-    quitButton.onclick = () => window.location.href = 'index.html';
-
-    resultsOverlay.appendChild(playAgainButton);
-    resultsOverlay.appendChild(quitButton);
-};
-
-const restartQuiz = () => {
-    // Reset state
-    score = 0;
-    currentQuiz = 0;
-    resultsOverlay.style.display = 'none';
-    quizContainer.style.display = 'block';
-    loadQuiz();
-};
-
-submitButton.addEventListener('click', () => {
-    const answer = getSelected();
-    if (answer) {
-        if (answer === quizData[currentQuiz].correct) score++;
-        currentQuiz++;
-        if (currentQuiz < quizData.length) {
-            loadQuiz();
-        } else {
-            showFinalScreen();
-        }
-    } else {
-        // Implement what happens if no answer is selected
+    function startQuiz() {
+        questions = getQuestions();
+        currentQuestionIndex = 0;
+        score = 0;
+        startOverlay.classList.add('hidden');
+        quizContainer.classList.remove('hidden');
+        resultsOverlay.classList.add('hidden');
+        showQuestion(questions[currentQuestionIndex]);
     }
-});
 
-// Start Quiz
-startButton.addEventListener('click', () => {
-    startOverlay.style.display = 'none';
-    loadQuiz();
+    function showQuestion(question) {
+        questionElement.textContent = question.question;
+        answerButtonsElement.innerHTML = '';
+        question.answers.forEach(answer => {
+            const button = document.createElement('button');
+            button.textContent = answer.text;
+            button.addEventListener('click', () => selectAnswer(answer.correct));
+            answerButtonsElement.appendChild(button);
+        });
+        submitAnswerButton.classList.add('hidden');
+    }
+
+    function selectAnswer(correct) {
+        Array.from(answerButtonsElement.children).forEach(button => {
+            button.disabled = true;
+        });
+        submitAnswerButton.classList.remove('hidden');
+        submitAnswerButton.addEventListener('click', () => nextQuestion(correct));
+    }
+
+    function nextQuestion(correct) {
+        if (correct) {
+            score++;
+        }
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            showQuestion(questions[currentQuestionIndex]);
+        } else {
+            endQuiz();
+        }
+    }
+
+    function endQuiz() {
+        quizContainer.classList.add('hidden');
+        resultsOverlay.classList.remove('hidden');
+        const percentage = (score / questions.length) * 100;
+        scoreTextElement.textContent = `Score: ${score}/${questions.length}`;
+        percentageTextElement.textContent = `Percentage: ${percentage.toFixed(2)}%`;
+    }
+
+    function getQuestions() {
+        return [
+            {
+                question: "What is the capital of Sweden?",
+                answers: [
+                    { text: "Gothenburg", correct: false },
+                    { text: "Malmo", correct: false },
+                    { text: "Uppsala", correct: false },
+                    { text: "Stockholm", correct: true }
+                ]
+            },
+            {
+                question: "Which Swedish company is known for flat-pack furniture?",
+                answers: [
+                    { text: "Volvo", correct: false },
+                    { text: "IKEA", correct: true },
+                    { text: "H&M", correct: false },
+                    { text: "Ericsson", correct: false }
+                ]
+            },
+            {
+                question: "What is the traditional Swedish festival celebrating the summer solstice?",
+                answers: [
+                    { text: "Valborg", correct: false },
+                    { text: "Midsommar", correct: true },
+                    { text: "Jul", correct: false },
+                    { text: "Påsk", correct: false }
+                ]
+            },
+            {
+                question: "Which of these is a traditional Swedish dish?",
+                answers: [
+                    { text: "Köttbullar (meatballs)", correct: true },
+                    { text: "Pizza", correct: false },
+                    { text: "Sushi", correct: false },
+                    { text: "Hamburger", correct: false }
+                ]
+            },
+            {
+                question: "Which city is known for its well-preserved medieval city center?",
+                answers: [
+                    { text: "Gothenburg", correct: false },
+                    { text: "Uppsala", correct: false },
+                    { text: "Visby", correct: true },
+                    { text: "Lund", correct: false }
+                ]
+            }
+             ];
+    }
+
+    startQuizButton.addEventListener('click', startQuiz);
+    restartQuizButton.addEventListener('click', startQuiz);
+});
+        ];
+    }
 });
