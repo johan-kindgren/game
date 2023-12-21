@@ -6,6 +6,7 @@
     color: #fff;
 }
 
+/* Body Styling */
 body {
     background-color: #000;
     font-family: "Poppins", sans-serif;
@@ -16,8 +17,7 @@ body {
     overflow: hidden;
 }
 
-
-
+/* Header Styling */
 .header {
     margin-bottom: 20px;
     text-align: center;
@@ -28,14 +28,17 @@ body {
     font-size: 2.5rem;
 }
 
+/* Main Container */
 .main-container {
     text-align: center;
 }
 
+/* Button Styling */
 .start-overlay button,
 .results-overlay button,
 #submit-answer {
-    background-color: #4CAF50;
+    background-color: #aaa;
+    /* Default gray color */
     color: white;
     border: none;
     padding: 15px 30px;
@@ -49,32 +52,18 @@ body {
     transition: color 0.3s ease;
 }
 
+#submit-answer.active-submit {
+    background-color: #4CAF50;
+    /* Green when active */
+}
+
 .start-overlay button:hover,
-.results-overlay button:hover {
+.results-overlay button:hover,
+#submit-answer:hover {
     background-color: #367c39;
 }
 
-.start-overlay button::after,
-.results-overlay button::after,
-#submit-answer::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #367c39;
-    z-index: -1;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-}
-
-.start-overlay button:hover::after,
-.results-overlay button:hover::after,
-#submit-answer:hover::after {
-    transform: translateY(0);
-}
-
+/* Quiz and Results Container */
 .quiz-container,
 .results-overlay {
     background-color: #292929;
@@ -138,7 +127,8 @@ body {
 }
 
 .selected-answer {
-    background-color: #ffcc00;
+    background-color: #bbb;
+    /* More distinct gray for selected answer */
 }
 
 .summary {

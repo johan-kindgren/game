@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             answerButtonsElement.appendChild(button);
         });
         submitAnswerButton.classList.add('hidden');
+        submitAnswerButton.classList.remove('active-submit'); // Reset submit button state
         selectedAnswerIndex = null;
     }
 
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.classList.remove('selected-answer');
             }
         });
-        submitAnswerButton.classList.remove('hidden');
+        submitAnswerButton.classList.add('active-submit'); // Activate submit button
     }
 
     function submitAnswer() {
