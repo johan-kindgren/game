@@ -44,15 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectAnswer(correct, index) {
+        if (selectedAnswerIndex !== null) {
+            // Clear previous selection
+            const previousSelectedButton = answerButtonsElement.children[selectedAnswerIndex];
+            previousSelectedButton.classList.remove('selected-answer');
+        }
+
+        // Highlight the new selected answer
         selectedAnswerIndex = index;
         selectedCorrect = correct;
-        Array.from(answerButtonsElement.children).forEach((button, buttonIndex) => {
-            if (buttonIndex === selectedAnswerIndex) {
-                button.classList.add('selected-answer');
-            } else {
-                button.classList.remove('selected-answer');
-            }
-        });
+        const selectedButton = answerButtonsElement.children[selectedAnswerIndex];
+        selectedButton.classList.add('selected-answer');
+        submitAnswerButton.classList.remove('hidden');
         submitAnswerButton.classList.add('active-submit'); // Activate submit button
     }
 
@@ -72,6 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 endQuiz();
             }
+            // Clear the current selection after submission
+            const selectedButton = answerButtonsElement.children[selectedAnswerIndex];
+            selectedButton.classList.remove('selected-answer');
+            submitAnswerButton.classList.remove('active-submit'); // Deactivate submit button
+            selectedAnswerIndex = null; // Reset the selected answer index
         }
     }
 
